@@ -6,9 +6,7 @@
     border: 1px solid #FFFFFF;
     background-repeat: no-repeat;
     background-position: center;
-    position: absolute;
-    top: 15px;
-    right: 0;
+    margin: 0 0 0 18px;
     cursor: pointer;
 }
 
@@ -18,7 +16,9 @@
 
 @media screen and (max-width: 767px) {
     .profile__button-edit{
-        top: 8px;
-        right: 19px;
+        background-size: 5.5px 5.5px;
+        width: 18px;
+        height: 18px;
+        margin: 0 0 0 10px;
     }
 }
