@@ -8,6 +8,7 @@
     cursor: pointer;
     right: 20px;
     top: 20px;
+    box-sizing: border-box;
 }
 
 .elements__delete:hover{
