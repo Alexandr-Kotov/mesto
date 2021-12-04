@@ -34,6 +34,7 @@ const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
 const popupBig = document.querySelector('.popup_big');
 const formEdit = document.querySelector('.popup__form_edit');
+const formAdd = document.querySelector('.popup__form_add')
 const inputName = document.querySelector('.popup__input_type_name');
 const inputDescription = document.querySelector('.popup__input_type_description');
 const inputHrefName = document.querySelector('.popup__input_type_name-href');
@@ -47,7 +48,6 @@ const buttonAdd = document.querySelector('.profile__button-add');
 const buttonCloseEdit = document.querySelector('.popup__close_edit');
 const buttonCloseAdd = document.querySelector('.popup__close_add');
 const buttonCloseBig = document.querySelector('.popup__close_big');
-const buttonSave = document.querySelector('.popup__save_add');
 
 //LIST CARD
 
@@ -55,9 +55,10 @@ function createCard(card){
     const element = template.querySelector('.elements__card').cloneNode(true);
     element.querySelector('.elements__title').innerText = card.name;
     element.querySelector('.elements__img').src = card.link;
-    element.querySelector('.elements__button').addEventListener('click', like);
-    element.querySelector('.elements__delete').addEventListener('click', cardDelete);
-    element.querySelector('.elements__img').addEventListener('click', fullScreen);
+    element.querySelector('.elements__img').alt = card.name;
+    element.querySelector('.elements__button').addEventListener('click', buttonLikeCard);
+    element.querySelector('.elements__delete').addEventListener('click', buttonDeleteCard);
+    element.querySelector('.elements__img').addEventListener('click', fullScreenImg);
     
     return element;
 };
@@ -69,13 +70,13 @@ function renderCard(card){
 
 //BUTTON LIKE
 
-function like(evt) {
+function buttonLikeCard(evt) {
     evt.target.classList.toggle('elements__button_active');
 };
 
 //BUTTON DELETE
 
-function cardDelete(evt){
+function buttonDeleteCard(evt){
     const element = evt.target.closest('.elements__card');
     element.remove();
 };
@@ -93,17 +94,21 @@ function closePopup(popup){
 
 //PROFILE INFO SAVE
 
-function profileInfo(evt){
+function saveProfileInfo(evt){
     evt.preventDefault();
     profileName.textContent = inputName.value;
     profileText.textContent = inputDescription.value;
     closePopup(popupEdit);
 };
 
+function renderProfileInfo(){
+    inputName.value = profileName.textContent;
+    inputDescription.value = profileText.textContent;
+};   
 
 //NEW CARD
 
-function cardNew(event){
+function newCard(event){
   event.preventDefault();
   const name = inputHrefName.value ;
   const href = inputHref.value;
@@ -112,13 +117,15 @@ function cardNew(event){
     link : href
   })
   listCard.prepend(card);
-if (cardNew) {
+if (newCard) {
   closePopup(popupAdd);
+  inputHrefName.value = "";
+  inputHref.value = "";
 }};
 
-// FULLSCREEN
+// FULLSCREEN IMG
 
-function fullScreen(evt){
+function fullScreenImg(evt){
   popupFigcaption.textContent = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
   popupImage.src = evt.target.src;
   openPopup(popupBig);
@@ -126,11 +133,16 @@ function fullScreen(evt){
 
 //LISTENERS
 
-buttonSave.addEventListener('click', cardNew);
+buttonEdit.addEventListener('click', function(){
+  renderProfileInfo();
+  openPopup(popupEdit);
+})
+
+
 buttonCloseEdit.addEventListener('click', () => closePopup(popupEdit));
 buttonCloseAdd.addEventListener('click', () => closePopup(popupAdd));
 buttonCloseBig.addEventListener('click', () => closePopup(popupBig));
-buttonEdit.addEventListener('click', () => openPopup(popupEdit));
 buttonAdd.addEventListener('click', () => openPopup(popupAdd));
-formEdit.addEventListener('submit', profileInfo);
+formEdit.addEventListener('submit', saveProfileInfo);
+formAdd.addEventListener('submit', newCard);
 initialCards.forEach(renderCard);
