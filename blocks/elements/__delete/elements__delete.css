@@ -1,6 +1,6 @@
 .elements__delete{
     position: absolute;
-    background: url('../../../images/delete.svg'), no-repeat;
+    background: url('../../../images/delete.svg') no-repeat;
     background-size: 18px 19px;
     width: 18px;
     height: 19px;
