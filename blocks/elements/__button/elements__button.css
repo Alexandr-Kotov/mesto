@@ -1,6 +1,8 @@
 .elements__button{
     background: url('../../../images/elements__button.svg') no-repeat;
     background-size: 22px 19px;
+    background-position: center;
+    padding: 0;
     width: 22px;
     height: 19px;
     border: 0;
