@@ -56,9 +56,9 @@ function createCard(card){
     element.querySelector('.elements__title').innerText = card.name;
     element.querySelector('.elements__img').src = card.link;
     element.querySelector('.elements__img').alt = card.name;
-    element.querySelector('.elements__button').addEventListener('click', buttonLikeCard);
-    element.querySelector('.elements__delete').addEventListener('click', buttonDeleteCard);
-    element.querySelector('.elements__img').addEventListener('click', fullScreenImg);
+    element.querySelector('.elements__button').addEventListener('click', likeCardButton);
+    element.querySelector('.elements__delete').addEventListener('click', deleteCardButton);
+    element.querySelector('.elements__img').addEventListener('click', openFullScreen);
     
     return element;
 };
@@ -68,15 +68,15 @@ function renderCard(card){
     listCard.append(element);
 };
 
-//BUTTON LIKE
+//LIKE CARD BUTTON 
 
-function buttonLikeCard(evt) {
+function likeCardButton(evt) {
     evt.target.classList.toggle('elements__button_active');
 };
 
-//BUTTON DELETE
+//DELETE CARD BUTTON
 
-function buttonDeleteCard(evt){
+function deleteCardButton(evt){
     const element = evt.target.closest('.elements__card');
     element.remove();
 };
@@ -106,9 +106,9 @@ function renderProfileInfo(){
     inputDescription.value = profileText.textContent;
 };   
 
-//NEW CARD
+//ADD NEW CARD
 
-function newCard(event){
+function addNewCard(event){
   event.preventDefault();
   const name = inputHrefName.value ;
   const href = inputHref.value;
@@ -117,17 +117,18 @@ function newCard(event){
     link : href
   })
   listCard.prepend(card);
-if (newCard) {
+if (addNewCard) {
   closePopup(popupAdd);
   inputHrefName.value = "";
   inputHref.value = "";
 }};
 
-// FULLSCREEN IMG
+//OPEN FULL SCREEN 
 
-function fullScreenImg(evt){
+function openFullScreen(evt){
   popupFigcaption.textContent = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
   popupImage.src = evt.target.src;
+  popupImage.alt = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
   openPopup(popupBig);
 };
 
@@ -144,5 +145,5 @@ buttonCloseAdd.addEventListener('click', () => closePopup(popupAdd));
 buttonCloseBig.addEventListener('click', () => closePopup(popupBig));
 buttonAdd.addEventListener('click', () => openPopup(popupAdd));
 formEdit.addEventListener('submit', saveProfileInfo);
-formAdd.addEventListener('submit', newCard);
+formAdd.addEventListener('submit', addNewCard);
 initialCards.forEach(renderCard);
