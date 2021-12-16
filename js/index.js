@@ -29,7 +29,7 @@ const initialCards = [
 const template = document.querySelector('.template').content;
 const listCard = document.querySelector('.elements');
 const popupOpen = document.querySelector('.popup_opened');
-const popup = document.querySelector('.popup');
+const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
 const popupBig = document.querySelector('.popup_big');
@@ -83,13 +83,28 @@ function deleteCardButton(evt){
 
 //POPUP OFF/ON
 
-function openPopup(popup){
-    popup.classList.add('popup_opened');
-};
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscapeHandler);
+}
 
-function closePopup(popup){
-    popup.classList.remove('popup_opened');
-};
+function closePopup() {
+  const openedPopup = document.querySelector('.popup_opened');
+  openedPopup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscapeHandler);
+}
+
+function closeByClickHandler(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup();
+  }
+}
+
+function closeByEscapeHandler(evt) {
+  if (evt.key === 'Escape') {
+    closePopup();
+  }
+}
 
 
 //PROFILE INFO SAVE
@@ -98,7 +113,7 @@ function saveProfileInfo(evt){
     evt.preventDefault();
     profileName.textContent = inputName.value;
     profileText.textContent = inputDescription.value;
-    closePopup(popupEdit);
+    closePopup();
 };
 
 function renderProfileInfo(){
@@ -118,7 +133,7 @@ function addNewCard(event){
   })
   listCard.prepend(card);
 if (addNewCard) {
-  closePopup(popupAdd);
+  closePopup();
   inputHrefName.value = "";
   inputHref.value = "";
 }};
@@ -139,10 +154,12 @@ buttonEdit.addEventListener('click', function(){
   openPopup(popupEdit);
 })
 
+popups.forEach(popup => {
+  popup.addEventListener('mouseup', closeByClickHandler);
+  const popupCloseButton = popup.querySelector('.popup__close');
+  popupCloseButton.addEventListener('click', closePopup);
+});
 
-buttonCloseEdit.addEventListener('click', () => closePopup(popupEdit));
-buttonCloseAdd.addEventListener('click', () => closePopup(popupAdd));
-buttonCloseBig.addEventListener('click', () => closePopup(popupBig));
 buttonAdd.addEventListener('click', () => openPopup(popupAdd));
 formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
