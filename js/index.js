@@ -28,7 +28,6 @@ const initialCards = [
 
 const template = document.querySelector('.template').content;
 const listCard = document.querySelector('.elements');
-const popupOpen = document.querySelector('.popup_opened');
 const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
@@ -132,18 +131,18 @@ function addNewCard(event){
     link : href
   })
   listCard.prepend(card);
-if (addNewCard) {
   closePopup();
   inputHrefName.value = "";
   inputHref.value = "";
-}};
+};
 
 //OPEN FULL SCREEN 
 
 function openFullScreen(evt){
-  popupFigcaption.textContent = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
+  const cardTitle = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
+  popupFigcaption.textContent = cardTitle;
   popupImage.src = evt.target.src;
-  popupImage.alt = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
+  popupImage.alt = cardTitle;
   openPopup(popupBig);
 };
 
