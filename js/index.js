@@ -47,24 +47,34 @@ const buttonAdd = document.querySelector('.profile__button-add');
 const buttonCloseEdit = document.querySelector('.popup__close_edit');
 const buttonCloseAdd = document.querySelector('.popup__close_add');
 const buttonCloseBig = document.querySelector('.popup__close_big');
+const buttonSaveForm = document.querySelector('.popup__save')
 
 //LIST CARD
 
 function createCard(card){
     const element = template.querySelector('.elements__card').cloneNode(true);
-    element.querySelector('.elements__title').innerText = card.name;
-    element.querySelector('.elements__img').src = card.link;
-    element.querySelector('.elements__img').alt = card.name;
+    const cardTitle = element.querySelector('.elements__title');
+    const cardImg = element.querySelector('.elements__img');
+    cardTitle.innerText = card.name;
+    cardImg.src = card.link;
+    cardImg.alt = card.name;
     element.querySelector('.elements__button').addEventListener('click', likeCardButton);
     element.querySelector('.elements__delete').addEventListener('click', deleteCardButton);
-    element.querySelector('.elements__img').addEventListener('click', openFullScreen);
+
+    //OPEN FULL SCREEN 
+
+    cardImg.addEventListener('click', function () {
+      popupImage.src = cardImg.src;
+      popupImage.alt = cardImg.name;
+      popupFigcaption.textContent = cardTitle.textContent;
+      openPopup(popupBig);
+    })
     
     return element;
 };
 
 function renderCard(card){
-    const element = createCard(card);
-    listCard.append(element);
+    listCard.prepend(card);
 };
 
 //LIKE CARD BUTTON 
@@ -126,26 +136,20 @@ function addNewCard(event){
   event.preventDefault();
   const name = inputHrefName.value ;
   const href = inputHref.value;
-  const card = createCard({
+  const card = {
     name : name,
     link : href
-  })
-  listCard.prepend(card);
+  }
+  renderCard(createCard(card))
   closePopup();
   inputHrefName.value = "";
   inputHref.value = "";
+  buttonSaveForm.setAttribute('disabled', true);
 };
 
-//OPEN FULL SCREEN 
-
-function openFullScreen(evt){
-  const cardTitle = evt.target.nextElementSibling.querySelector('.elements__title').textContent;
-  popupFigcaption.textContent = cardTitle;
-  popupImage.src = evt.target.src;
-  popupImage.alt = cardTitle;
-  openPopup(popupBig);
-};
-
+initialCards.forEach(function (item){
+  renderCard(createCard(item))
+});
 //LISTENERS
 
 buttonEdit.addEventListener('click', function(){
@@ -162,4 +166,3 @@ popups.forEach(popup => {
 buttonAdd.addEventListener('click', () => openPopup(popupAdd));
 formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
-initialCards.forEach(renderCard);

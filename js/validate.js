@@ -26,11 +26,11 @@ const toogleButtonError = (inputs, button, inactiveButtonClass) =>{
     }
 }
 
-const checkIfInputValid = (form, input, { inputErrorClass, errorClass }) =>{
+const checkIfInputValid = (form, input, { inputErrorClass, errorClass }) => {
     if (!input.validity.valid) {
         showError(form, input, input.validationMessage, errorClass, inputErrorClass)
     } else{
-        hideError(form, input, inputErrorClass, errorClass);
+        hideError(form, input,  errorClass, inputErrorClass);
     };
 };
 
@@ -66,5 +66,5 @@ enableValidation({
     submitButtonSelector: '.popup__save',
     inactiveButtonClass: 'popup__save_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
+    errorClass: 'popup__input-error_active'
 }); 
