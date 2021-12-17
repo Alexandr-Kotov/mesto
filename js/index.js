@@ -47,7 +47,7 @@ const buttonAdd = document.querySelector('.profile__button-add');
 const buttonCloseEdit = document.querySelector('.popup__close_edit');
 const buttonCloseAdd = document.querySelector('.popup__close_add');
 const buttonCloseBig = document.querySelector('.popup__close_big');
-const buttonSaveForm = document.querySelector('.popup__save')
+const buttonSaveForm = document.querySelector('.popup__save_add')
 
 //LIST CARD
 
@@ -157,12 +157,17 @@ buttonEdit.addEventListener('click', function(){
   openPopup(popupEdit);
 })
 
+buttonAdd.addEventListener('click', function(){
+  buttonSaveForm.classList.add('popup__save_disabled');
+  openPopup(popupAdd);
+})
+
+
 popups.forEach(popup => {
   popup.addEventListener('mouseup', closeByClickHandler);
   const popupCloseButton = popup.querySelector('.popup__close');
   popupCloseButton.addEventListener('click', closePopup);
 });
 
-buttonAdd.addEventListener('click', () => openPopup(popupAdd));
 formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
