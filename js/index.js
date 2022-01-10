@@ -1,5 +1,7 @@
 import {initialCards} from './initialCards.js';
+import {validation} from './validation.js'
 import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 export {popupImage, popupFigcaption, popupBig, openPopup};
 
@@ -22,12 +24,6 @@ const buttonEdit = document.querySelector('.profile__button-edit');
 const buttonAdd = document.querySelector('.profile__button-add');
 const buttonSaveForm = document.querySelector('.popup__save_add');
 
-function renderNewCard(card) {
-  const newCard = new Card(card, '.template');
-  const cardElement = newCard.createCard();
-
-  listCard.prepend(cardElement);
-}
 
 //POPUP OFF/ON
 
@@ -92,12 +88,14 @@ initialCards.forEach(function (card){
 //LISTENERS
 
 buttonEdit.addEventListener('click', function(){
+  editFormValidator.resetValidation();
   renderProfileInfo();
+  editFormValidator.setSubmitButtonState();
   openPopup(popupEdit);
 })
 
 buttonAdd.addEventListener('click', function(){
-  buttonSaveForm.classList.add('popup__save_disabled');
+  addFormValidator.resetValidation();
   openPopup(popupAdd);
 })
 
@@ -110,3 +108,17 @@ popups.forEach(popup => {
 
 formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
+
+
+function renderNewCard(card) {
+  const newCard = new Card(card, '.template');
+  const cardElement = newCard.createCard();
+
+  listCard.prepend(cardElement);
+}
+
+const addFormValidator = new FormValidator(validation, formAdd);
+const editFormValidator = new FormValidator(validation, formEdit);
+
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
