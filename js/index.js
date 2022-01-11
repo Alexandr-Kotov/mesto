@@ -1,5 +1,5 @@
-import {initialCards} from './initialCards.js';
-import {validation} from './validation.js'
+import {initialCards} from '../utils/initialCards.js';
+import {validation} from '../utils/validation.js'
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
@@ -22,7 +22,6 @@ const popupImage = document.querySelector('.popup__image');
 const popupFigcaption = document.querySelector('.popup__figcaption');
 const buttonEdit = document.querySelector('.profile__button-edit');
 const buttonAdd = document.querySelector('.profile__button-add');
-const buttonSaveForm = document.querySelector('.popup__save_add');
 
 
 //POPUP OFF/ON
@@ -38,37 +37,36 @@ function closePopup() {
   document.removeEventListener('keydown', closeByEscapeHandler);
 }
 
-function closeByClickHandler(evt) {
-  if (evt.target.classList.contains('popup')) {
-    closePopup();
-  }
-}
-
 function closeByEscapeHandler(evt) {
   if (evt.key === 'Escape') {
     closePopup();
   }
 }
 
+popups.forEach((popup) => { 
+  popup.addEventListener('click', (evt) => { 
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close')) {
+        closePopup(popup); 
+    } 
+  })
+}) 
 
 //PROFILE INFO SAVE
 
 function saveProfileInfo(evt){
-    evt.preventDefault();
-    profileName.textContent = inputName.value;
-    profileText.textContent = inputDescription.value;
-    closePopup();
+  profileName.textContent = inputName.value;
+  profileText.textContent = inputDescription.value;
+  closePopup();
 };
 
 function renderProfileInfo(){
-    inputName.value = profileName.textContent;
-    inputDescription.value = profileText.textContent;
+  inputName.value = profileName.textContent;
+  inputDescription.value = profileText.textContent;
 };   
 
 //ADD NEW CARD
 
 function addNewCard(event){
-  event.preventDefault();
   const name = inputHrefName.value ;
   const href = inputHref.value;
   const card = {
@@ -76,10 +74,9 @@ function addNewCard(event){
     link : href
   }
   renderNewCard(card)
+  addFormValidator.resetValidation()
+  addFormValidator.setSubmitButtonState()
   closePopup();
-  inputHrefName.value = "";
-  inputHref.value = "";
-  buttonSaveForm.setAttribute('disabled', true);
 };
 
 initialCards.forEach(function (card){
@@ -95,26 +92,23 @@ buttonEdit.addEventListener('click', function(){
 })
 
 buttonAdd.addEventListener('click', function(){
-  addFormValidator.resetValidation();
   openPopup(popupAdd);
 })
 
-
-popups.forEach(popup => {
-  popup.addEventListener('mouseup', closeByClickHandler);
-  const popupCloseButton = popup.querySelector('.popup__close');
-  popupCloseButton.addEventListener('click', closePopup);
-});
 
 formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
 
 
-function renderNewCard(card) {
+function createCard(card){
   const newCard = new Card(card, '.template');
   const cardElement = newCard.createCard();
+  return (cardElement)
+}
 
-  listCard.prepend(cardElement);
+function renderNewCard(card) {
+  const cardElementList = createCard(card)
+  listCard.prepend(cardElementList);
 }
 
 const addFormValidator = new FormValidator(validation, formAdd);
