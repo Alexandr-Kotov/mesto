@@ -31,15 +31,15 @@ function openPopup(popup) {
   document.addEventListener('keydown', closeByEscapeHandler);
 }
 
-function closePopup() {
-  const openedPopup = document.querySelector('.popup_opened');
-  openedPopup.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscapeHandler);
 }
 
 function closeByEscapeHandler(evt) {
   if (evt.key === 'Escape') {
-    closePopup();
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
@@ -56,7 +56,7 @@ popups.forEach((popup) => {
 function saveProfileInfo(evt){
   profileName.textContent = inputName.value;
   profileText.textContent = inputDescription.value;
-  closePopup();
+  closePopup(popupEdit);
 };
 
 function renderProfileInfo(){
@@ -76,7 +76,7 @@ function addNewCard(event){
   renderNewCard(card)
   addFormValidator.resetValidation()
   addFormValidator.setSubmitButtonState()
-  closePopup();
+  closePopup(popupAdd);
 };
 
 initialCards.forEach(function (card){
@@ -98,7 +98,6 @@ buttonAdd.addEventListener('click', function(){
 
 formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
-
 
 function createCard(card){
   const newCard = new Card(card, '.template');
