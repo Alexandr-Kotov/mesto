@@ -1,11 +1,12 @@
 import {initialCards} from '../utils/initialCards.js';
 import {validation} from '../utils/validation.js'
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 
 export {popupImage, popupFigcaption, popupBig, openPopup};
 
-const listCard = document.querySelector('.elements');
+const listCard = ('.elements');
 const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
@@ -23,6 +24,13 @@ const popupFigcaption = document.querySelector('.popup__figcaption');
 const buttonEdit = document.querySelector('.profile__button-edit');
 const buttonAdd = document.querySelector('.profile__button-add');
 
+
+const section = new Section({
+  items: initialCards,
+  renderer: createCard
+}, listCard)
+
+section.renderItems()
 
 //POPUP OFF/ON
 
@@ -79,9 +87,9 @@ function addNewCard(event){
   closePopup(popupAdd);
 };
 
-initialCards.forEach(function (card){
-  renderNewCard(card)
-});
+//initialCards.forEach(function (card){
+//  renderNewCard(card)
+//});
 //LISTENERS
 
 buttonEdit.addEventListener('click', function(){
@@ -105,10 +113,10 @@ function createCard(card){
   return (cardElement)
 }
 
-function renderNewCard(card) {
-  const cardElementList = createCard(card)
-  listCard.prepend(cardElementList);
-}
+//function renderNewCard(card) {
+// const cardElementList = createCard(card)
+// listCard.prepend(cardElementList);
+//}
 
 const addFormValidator = new FormValidator(validation, formAdd);
 const editFormValidator = new FormValidator(validation, formEdit);
