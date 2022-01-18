@@ -1,28 +1,43 @@
-import {initialCards} from '../utils/initialCards.js';
-import {validation} from '../utils/validation.js'
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import {
+  initialCards,
+  validation, 
+  listCard, 
+  popups, 
+  popupEdit, 
+  popupAdd, 
+  popupBig, 
+  formEdit, 
+  formAdd, 
+  inputName, 
+  inputDescription, 
+  inputHrefName, 
+  inputHref, 
+  profileName, 
+  profileText, 
+  popupImage, 
+  popupFigcaption, 
+  buttonEdit, 
+  buttonAdd} from '../utils/constants.js'
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js'
 
 export {popupImage, popupFigcaption, popupBig, openPopup};
 
-const listCard = document.querySelector('.elements');
-const popups = document.querySelectorAll('.popup');
-const popupEdit = document.querySelector('.popup_edit');
-const popupAdd = document.querySelector('.popup_add');
-const popupBig = document.querySelector('.popup_big');
-const formEdit = document.querySelector('.popup__form_edit');
-const formAdd = document.querySelector('.popup__form_add')
-const inputName = document.querySelector('.popup__input_type_name');
-const inputDescription = document.querySelector('.popup__input_type_description');
-const inputHrefName = document.querySelector('.popup__input_type_name-href');
-const inputHref = document.querySelector('.popup__input_type_href');
-const profileName = document.querySelector('.profile__title');
-const profileText = document.querySelector('.profile__subtitle');
-const popupImage = document.querySelector('.popup__image');
-const popupFigcaption = document.querySelector('.popup__figcaption');
-const buttonEdit = document.querySelector('.profile__button-edit');
-const buttonAdd = document.querySelector('.profile__button-add');
 
+
+
+const userInfo = new UserInfo ({profileName, profileText});
+
+
+
+const section = new Section({
+  items: initialCards,
+  renderer: createCard
+}, listCard)
+
+section.renderItems()
 
 //POPUP OFF/ON
 
@@ -53,11 +68,11 @@ popups.forEach((popup) => {
 
 //PROFILE INFO SAVE
 
-function saveProfileInfo(evt){
-  profileName.textContent = inputName.value;
-  profileText.textContent = inputDescription.value;
-  closePopup(popupEdit);
-};
+//function saveProfileInfo(evt){
+//  profileName.textContent = inputName.value;
+//  profileText.textContent = inputDescription.value;
+//  closePopup(popupEdit);
+//};
 
 function renderProfileInfo(){
   inputName.value = profileName.textContent;
@@ -79,12 +94,16 @@ function addNewCard(event){
   closePopup(popupAdd);
 };
 
-initialCards.forEach(function (card){
-  renderNewCard(card)
-});
+//initialCards.forEach(function (card){
+//  renderNewCard(card)
+//});
 //LISTENERS
 
-buttonEdit.addEventListener('click', function(){
+buttonEdit.addEventListener('click',() =>{
+  const currentUser = userInfo.getUserInfo();
+
+  inputName.value = currentUser.name;
+  inputDescription.value = currentUser.aboutMe;
   editFormValidator.resetValidation();
   renderProfileInfo();
   editFormValidator.setSubmitButtonState();
@@ -96,7 +115,6 @@ buttonAdd.addEventListener('click', function(){
 })
 
 
-formEdit.addEventListener('submit', saveProfileInfo);
 formAdd.addEventListener('submit', addNewCard);
 
 function createCard(card){
@@ -105,10 +123,10 @@ function createCard(card){
   return (cardElement)
 }
 
-function renderNewCard(card) {
-  const cardElementList = createCard(card)
-  listCard.prepend(cardElementList);
-}
+//function renderNewCard(card) {
+// const cardElementList = createCard(card)
+// listCard.prepend(cardElementList);
+//}
 
 const addFormValidator = new FormValidator(validation, formAdd);
 const editFormValidator = new FormValidator(validation, formEdit);
