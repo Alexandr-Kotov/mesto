@@ -6,7 +6,7 @@ export default class UserInfo{
   getUserInfo(){
     return{
       name: this._userName,
-      aboutMe: this._userAboutMe
+      aboutMe: this._userAboutMe,
     }
   }
   setUserInfo({inputName, inputDescription}){
