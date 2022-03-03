@@ -1,25 +1,4 @@
-export {
-  initialCards,
-  validation, 
-  listCard, 
-  popups, 
-  popupEdit, 
-  popupAdd, 
-  popupBig, 
-  formEdit, 
-  formAdd, 
-  inputName, 
-  inputDescription, 
-  inputHrefName, 
-  inputHref, 
-  profileName, 
-  profileText, 
-  popupImage, 
-  popupFigcaption, 
-  buttonEdit, 
-  buttonAdd}
-
-const initialCards = [
+export const initialCards = [
   {
     name: 'Ёлка',
     link: 'https://images.unsplash.com/photo-1609009755337-df397a1aa480?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
@@ -46,7 +25,7 @@ const initialCards = [
   }
 ]; 
 
-const validation ={
+export const validation ={
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save',
@@ -55,20 +34,14 @@ const validation ={
   errorClass: 'popup__input-error_active'
 }; 
 
-const listCard = ('.elements');
-const popups = document.querySelectorAll('.popup');
-const popupEdit = document.querySelector('.popup_edit');
-const popupAdd = document.querySelector('.popup_add');
-const popupBig = document.querySelector('.popup_big');
-const formEdit = document.querySelector('.popup__form_edit');
-const formAdd = document.querySelector('.popup__form_add')
-const inputName = document.querySelector('.popup__input_type_name');
-const inputDescription = document.querySelector('.popup__input_type_description');
-const inputHrefName = document.querySelector('.popup__input_type_name-href');
-const inputHref = document.querySelector('.popup__input_type_href');
-const profileName = document.querySelector('.profile__title');
-const profileText = document.querySelector('.profile__subtitle');
-const popupImage = document.querySelector('.popup__image');
-const popupFigcaption = document.querySelector('.popup__figcaption');
-const buttonEdit = document.querySelector('.profile__button-edit');
-const buttonAdd = document.querySelector('.profile__button-add');
+export const listCard = ('.elements');
+export const popupEdit = document.querySelector('.popup_edit');
+export const popupAdd = document.querySelector('.popup_add');
+export const formEdit = document.querySelector('.popup__form_edit');
+export const formAdd = document.querySelector('.popup__form_add')
+export const inputName = popupEdit.querySelector('.popup__input_type_name');
+export const inputDescription = popupEdit.querySelector('.popup__input_type_description');
+export const userName = document.querySelector('.profile__title');
+export const userAboutMe = document.querySelector('.profile__subtitle');
+export const buttonEdit = document.querySelector('.profile__button-edit');
+export const buttonAdd = document.querySelector('.profile__button-add');

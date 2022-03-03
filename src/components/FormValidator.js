@@ -8,7 +8,7 @@ export default class FormValidator {
   
   _handleSubmit(evt) {
     evt.preventDefault();
-  }
+  };
   
   _isInputValid(input) {
     if (input.validity.valid) {
@@ -16,27 +16,27 @@ export default class FormValidator {
     } else {
       this._showInputError(input);
     }
-  }
+  };
   
   _hideInputError(input) {
     const errorMessage = this._formElement.querySelector(`#${input.id}-error`);
     errorMessage.textContent = '';
     errorMessage.classList.remove(this._config.errorClass);
     input.classList.remove(this._config.inputErrorClass);
-  }
+  };
   
   _showInputError(input) {
     const errorMessage = this._formElement.querySelector(`#${input.id}-error`);
     errorMessage.textContent = input.validationMessage;
     errorMessage.classList.add(this._config.errorClass);
     input.classList.add(this._config.inputErrorClass);
-  }
+  };
   
   _resetInputsErrors() {
     this._inputs.forEach(input => {
       this._hideInputError(input);
     })
-  }
+  };
   
   _setFormListeners() {
     this._formElement.addEventListener('submit', (evt) => {
@@ -52,20 +52,19 @@ export default class FormValidator {
     });
   
     this.setSubmitButtonState();
-  }
+  };
   
   setSubmitButtonState() {
     this._submitButton.disabled = !this._formElement.checkValidity();
     this._submitButton.classList.toggle(this._config.inactiveButtonClass, !this._formElement.checkValidity());
-  }
+  };
   
   resetValidation() {
     this._formElement.reset();
     this._resetInputsErrors();
-  }
+  };
   
   enableValidation() {
     this._setFormListeners();
-  }
-  
-}
+  }; 
+};

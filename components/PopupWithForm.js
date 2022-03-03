@@ -1,5 +1,0 @@
-class PopupWithForm{
-  constructor(){
-    
-  }
-}
