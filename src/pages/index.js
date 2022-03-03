@@ -20,14 +20,14 @@ import {
 } from '../utils/constants.js';
 
 const userInfo = new UserInfo({userName, userAboutMe});
-const submitProfileHandler = (values) => userInfo.setUserInfo(values);
-const popupFormEdit = new PopupWithForm('.popup_edit', submitProfileHandler);
+const handleProfileFormSubmit = (values) => userInfo.setUserInfo(values);
+const popupFormEdit = new PopupWithForm('.popup_edit', handleProfileFormSubmit);
 
 buttonEdit.addEventListener('click', () =>{
+  editFormValidator.resetValidation() 
   const currentUser = userInfo.getUserInfo();
   inputName.value = currentUser.profileName;
   inputDescription.value = currentUser.profileAboutme;
-  editFormValidator.resetValidation()
   editFormValidator.setSubmitButtonState();
   popupFormEdit.open();
 });
@@ -57,11 +57,11 @@ section.renderItems();
 
 
 
-const submitCardHandler = ({ cardName, cardLink }) => {
+const handleCardFormSubmit = ({ cardName, cardLink }) => {
   const card = createNewCard({ name: cardName, link: cardLink });
   section.addItem(card);
 };
-const popupFormAdd = new PopupWithForm('.popup_add', submitCardHandler);
+const popupFormAdd = new PopupWithForm('.popup_add', handleCardFormSubmit);
 
 
 buttonAdd.addEventListener('click', function (){

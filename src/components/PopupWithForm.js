@@ -31,7 +31,7 @@ export default class PopupWithForm extends Popup {
 // Обработчик сабмита формы remove.
   _removeEventListeners() {
     super._removeEventListeners();
-    this._form.removeEventListener('submit', this._setEventListeners());
+    this._form.removeEventListener('submit', this._submitForm);
   };
 // Сбрасываться форрма.
   close() {
