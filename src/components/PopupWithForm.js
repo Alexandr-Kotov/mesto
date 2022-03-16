@@ -5,6 +5,7 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._submitHandler = submitHandler;
     this._form = this._popup.querySelector('.popup__form');
+    this._button = this._form.querySelector('.popup__save');
     this._inputList = this._form.querySelectorAll('.popup__input');
     this._formValues = {};
   }
@@ -17,10 +18,19 @@ export default class PopupWithForm extends Popup {
     return this._formValues
   };
 
+  _timeout (){
+    this._button.textContent =  "Сохранение..."
+    setTimeout(() =>{
+      this.close()
+      this._button.textContent = "Выполнено"
+    }, 1000)
+  }
+
+
   _submitForm = (evt) => {
     evt.preventDefault();
     this._submitHandler(this._getInputValues());
-    this.close();
+    this._timeout()
   };
 
 // Обработчик сабмита формы set.

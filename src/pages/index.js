@@ -10,7 +10,6 @@ import {
   buttonAdd,
   buttonEdit,
   formEdit,
-  initialCards,
   listCard,
   inputName,
   inputDescription,
@@ -20,7 +19,11 @@ import {
   validation,
   buttonAvatar,
   formAvatar,
-  userAvatar
+  userAvatar,
+  buttonFormSaveEdit,
+  buttonFormSaveDelete,
+  buttonFormSaveAvatar,
+  buttonFormSaveAdd
 } from '../utils/constants.js';
 let userId
 
@@ -31,7 +34,7 @@ const handleProfileFormSubmit = (values) => {
   api.patchProfile(profileName, profileAboutme)
   userInfo.setUserInfo({profileName, profileAboutme});
 }
-const submitAvatarHandler = ({ avatarLink }) =>
+const handlerAvatarFormSubmit = ({ avatarLink }) =>
   api
     .patchAvatar(avatarLink)
     .then((user) => userInfo.setUserInfo({profileName: user.name, profileAboutme: user.about, avatarLink: user.avatar}))
@@ -39,7 +42,7 @@ const submitAvatarHandler = ({ avatarLink }) =>
 
 const popupFormEdit = new PopupWithForm('.popup_edit', handleProfileFormSubmit);
 const popupFormDelete = new PopupWithForm('.popup_delete')
-const popupFormAvatar = new PopupWithForm('.popup_avatar', submitAvatarHandler)
+const popupFormAvatar = new PopupWithForm('.popup_avatar', handlerAvatarFormSubmit)
 
 
 
@@ -65,17 +68,15 @@ api.getCardSever()
   });
 })
 
-
 buttonEdit.addEventListener('click', () =>{
   editFormValidator.resetValidation() 
   const currentUser = userInfo.getUserInfo();
   inputName.value = currentUser.profileName;
   inputDescription.value = currentUser.profileAboutme;
   editFormValidator.setSubmitButtonState();
+  buttonFormSaveEdit.textContent = "Сохранить"
   popupFormEdit.open();
 });
-
-
 
 const popupBig = new PopupWithImage('.popup_big');
 
@@ -86,6 +87,7 @@ function createNewCard(card){
     }
   },
   (id) =>{
+    buttonFormSaveDelete.textContent = "Да"
     popupFormDelete.open()
     popupFormDelete.changeSubmitHandler(() =>{
       api.deleteCard(id)
@@ -139,16 +141,18 @@ const handleCardFormSubmit = ({ cardName, cardLink }) => {
 };
 const popupFormAdd = new PopupWithForm('.popup_add', handleCardFormSubmit);
 
-
 buttonAdd.addEventListener('click', function (){
   addFormValidator.resetValidation();
   addFormValidator.setSubmitButtonState();
+  buttonFormSaveAdd.textContent = "Создать"
   popupFormAdd.open();
 });
+
 
 buttonAvatar.addEventListener('click', function (){
   avatarFormValidator.resetValidation();
   avatarFormValidator.setSubmitButtonState()
+  buttonFormSaveAvatar.textContent = "Сохранить"
   popupFormAvatar.open()
 })
 
