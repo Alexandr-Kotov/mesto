@@ -19,8 +19,6 @@ export default class UserInfo{
     this._userAboutMe.textContent = profileAboutme;
     if(avatarLink){
       this._userAvatar.src = avatarLink
-    }else{
-      this._userAvatar.src;
     }
   };
 };

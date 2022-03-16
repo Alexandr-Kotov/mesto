@@ -12,7 +12,6 @@ class Api {
       headers: this._headers
     })  
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   patchProfile(name, about){

@@ -23,6 +23,5 @@ export const buttonAvatar = document.querySelector('.profile__avatar-owner');
 export const formAvatar = document.querySelector('.popup__form_avatar');
 export const avatar = document.querySelector('.profile__avatar');
 export const buttonFormSaveEdit = document.querySelector('.popup__save_edit');
-export const buttonFormSaveDelete = document.querySelector('.popup__save_delete');
 export const buttonFormSaveAvatar = document.querySelector('.popup__save_avatar');
 export const buttonFormSaveAdd = document.querySelector('.popup__save_add');
