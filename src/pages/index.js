@@ -33,16 +33,25 @@ const handleProfileFormSubmit = (values) => {
   api.patchProfile(profileName, profileAboutme)
   .then(()=>{
     userInfo.setUserInfo({profileName, profileAboutme});
+    popupFormEdit.close();
   })
   .catch((err) => console.log(err))
   .finally(() =>{
     buttonFormSaveEdit.textContent = "Сохранить"
   })
 }
+
+
 const handlerAvatarFormSubmit = ({ avatarLink }) =>{
   buttonFormSaveAvatar.textContent = "Сохранение..."
   api.patchAvatar(avatarLink)
-    .then((user) => userInfo.setUserInfo({profileName: user.name, profileAboutme: user.about, avatarLink: user.avatar}))
+    .then(user => {userInfo.setUserInfo({
+      profileName: user.name,
+      profileAboutme: user.about,
+      avatarLink: user.avatar
+    });
+    popupFormAvatar.close();
+    })
     .catch((err) => console.log(err))
     .finally(() =>{
       buttonFormSaveAvatar.textContent = "Сохранить"
@@ -63,7 +72,6 @@ api.getProfile()
 
 api.getCardSever()
 .then(cardlist =>{
-  console.log('cardlist', cardlist)
   cardlist.reverse()
   cardlist.forEach(data => {
     const card = createNewCard({
@@ -102,6 +110,7 @@ function createNewCard(card){
       api.deleteCard(id)
       .then(res =>{
         newCard.deleteCard()
+        popupFormDelete.close()
       })
       .catch((err) => console.log(err));
     })
@@ -147,6 +156,7 @@ const handleCardFormSubmit = ({ cardName, cardLink }) => {
       ownerId: res.owner._id
     });
     cardsContainer.addItem(card);
+    popupFormAdd.close()
   })
   .catch((err) => console.log(err))
   .finally(() =>{

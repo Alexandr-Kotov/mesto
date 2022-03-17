@@ -3,8 +3,6 @@ class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
     this._resHandler = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-    
-    // тело конструктора
   }
 
   getProfile(){
@@ -25,7 +23,6 @@ class Api {
     })
 
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   getCardSever(){
@@ -33,7 +30,6 @@ class Api {
       headers: this._headers
     })
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   postCardSever(name, link){
@@ -46,7 +42,6 @@ class Api {
     })
     })
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   
@@ -56,7 +51,6 @@ class Api {
       headers: this._headers,
     })
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   addLike(id){
@@ -65,7 +59,6 @@ class Api {
       headers: this._headers,
     })
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   deleteLike(id){
@@ -74,7 +67,6 @@ class Api {
       headers: this._headers,
     })
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 
   patchAvatar(avatarLink) {
@@ -86,7 +78,6 @@ class Api {
       })
     })
     .then((res) => this._resHandler(res))
-    .catch(console.log)
   }
 }
 

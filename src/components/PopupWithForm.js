@@ -20,7 +20,6 @@ export default class PopupWithForm extends Popup {
   _submitForm = (evt) => {
     evt.preventDefault();
     this._submitHandler(this._getInputValues());
-    this.close()
   };
 
 // Обработчик сабмита формы set.
